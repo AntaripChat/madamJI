@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impress Your Crush</title>
+    <style>
+        /* Your existing CSS styles here */
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h1>Hey, You!</h1>
+        <p>Life is a lot more colorful with you in it. 🌈</p>
+        <p class="heart">❤️</p>
+        <button id="revealMessage">Click Me</button>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+    <div class="popup" id="popup">
+        <h2>Every day with you feels like a gift, and I love you more than words can say. 💖</h2>
+    </div>
+
+    <div id="player"></div>  <script>
+        // Load the YouTube IFrame Player API
+        const tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        const firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        // Function to create YouTube player
+        let player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '315',
+                width: '560',
+                videoId: 'YOUR_VIDEO_ID', // Replace with your YouTube video ID
+                playerVars: { 'autoplay': 1 },  // Enable autoplay
+                events: {
+                    'onReady': onPlayerReady
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            // Optional: Play video muted initially
+            // event.target.mute();
+        }
+
+        // ... (Rest of your JavaScript code) ...
+
+        button.addEventListener("click", () => {
+            popup.style.display = "block";
+            overlay.style.display = "block";
+            button.style.display = "none";
+            createFallingFlowers();
+            setInterval(createFireworks, 500);
+
+            // Play YouTube video
+            player.playVideo();
+
+            overlay.addEventListener("click", () => {
+                popup.style.display = "none";
+                overlay.style.display = "none";
+                // Stop YouTube video (optional)
+                player.stopVideo();
+            });
+        });
+
+        // ... (Rest of your JavaScript code) ...
+    </script>
+
+</body>
+</html>

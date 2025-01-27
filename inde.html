@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Impress Your Crush</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: "Arial", sans-serif;
+        background: black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        overflow: hidden;
+        cursor: url('data:image/svg+xml,<svg width="16" height="16" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="6" fill="white"/></svg>'),
+          auto; /* Apply cursor style to the entire body */
+      }
+
+      .card {
+        background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+        width: 90%;
+        max-width: 400px;
+        padding: 20px;
+        border-radius: 20px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: 2.5rem;
+        color: red;
+      }
+
+      p {
+        color: red;
+        margin: 10px 0 20px;
+      }
+
+      .heart {
+        color: #ff6b6b;
+        font-size: 3rem;
+        animation: beat 1s infinite;
+      }
+
+      @keyframes beat {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.2);
+        }
+      }
+
+      button {
+        background: linear-gradient(135deg, #ff6b6b, #f06595);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 50px;
+        cursor: url('data:image/svg+xml,<svg width="16" height="16" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="6" fill="white"/></svg>'),
+          auto; /* Added cursor style */
+        font-size: 1rem;
+        transition: transform 0.2s ease;
+      }
+
+      button:hover {
+        transform: scale(1.1);
+      }
+
+      .flower {
+        position: absolute;
+        top: -50px;
+        width: 30px;
+        height: 30px;
+        background: pink;
+        border-radius: 50%;
+        box-shadow: 0 0 10px rgba(255, 182, 193, 0.5);
+        animation: fall 4s linear infinite;
+        z-index: 1000;
+      }
+
+      .red-flower {
+        background: red;
+        width: 40px;
+        height: 40px;
+      }
+
+      @keyframes fall {
+        0% {
+          transform: translateY(-50px) rotate(0deg);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(100vh) rotate(360deg);
+          opacity: 0;
+        }
+      }
+
+      .popup {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(255, 255, 255, 0.9);
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        text-align: center;
+        display: none;
+        z-index: 1000;
+      }
+
+      .popup h2 {
+        margin: 0;
+        font-size: 2rem;
+        color: red;
+        animation: blink 1s infinite;
+      }
+
+      @keyframes blink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0;
+        }
+      }
+
+      .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        display: none;
+        z-index: 999;
+      }
+
+      .firework {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background: white;
+        border-radius: 50%;
+        animation: explode 2s ease-out infinite;
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+        z-index: 900;
+      }
+
+      @keyframes explode {
+        0% {
+          transform: scale(1);
+          opacity: 1;
+        }
+        100% {
+          transform: scale(5);
+          opacity: 0;
+        }
+      }
+
+      @keyframes color-change {
+        0% {
+          background: red;
+        }
+        25% {
+          background: blue;
+        }
+        50% {
+          background: yellow;
+        }
+        75% {
+          background: green;
+        }
+        100% {
+          background: purple;
+        }
+      }
+
+      .firework {
+        animation: explode 2s ease-out infinite, color-change 2s infinite;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h1>Hey, You!</h1>
+      <p>Life is a lot more colorful with you in it. 🌈</p>
+      <p class="heart">❤️</p>
+      <button id="revealMessage">Click Me</button>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+    <div class="popup" id="popup">
+      <h2>
+        Every day with you feels like a gift, and I love you more than words can
+        say. 💖
+      </h2>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const button = document.getElementById("revealMessage");
+        const popup = document.getElementById("popup");
+        const overlay = document.getElementById("overlay");
+
+        button.addEventListener("click", () => {
+          popup.style.display = "block";
+          overlay.style.display = "block";
+          button.style.display = "none";
+          createFallingFlowers();
+          setInterval(createFireworks, 500);
+
+          overlay.addEventListener("click", () => {
+            popup.style.display = "none";
+            overlay.style.display = "none";
+          });
+        });
+
+        function createFallingFlowers() {
+          const flowerContainer = document.body;
+
+          for (let i = 0; i < 20; i++) {
+            const flower = document.createElement("div");
+            flower.className =
+              Math.random() > 0.5 ? "flower" : "flower red-flower";
+            flower.style.left = Math.random() * 100 + "vw";
+            flower.style.animationDelay = Math.random() * 3 + "s";
+            flowerContainer.appendChild(flower);
+
+            flower.addEventListener("animationend", () => {
+              flower.remove();
+            });
+          }
+        }
+
+        function createFireworks() {
+          const fireworkContainer = document.body;
+
+          const firework = document.createElement("div");
+          firework.className = "firework";
+          firework.style.left = Math.random() * 100 + "vw";
+          firework.style.top = Math.random() * 50 + "vh";
+          fireworkContainer.appendChild(firework);
+
+          firework.addEventListener("animationend", () => {
+            firework.remove();
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
